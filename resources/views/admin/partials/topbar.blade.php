@@ -2,16 +2,16 @@
 <header class="top-header">
     <nav class="navbar navbar-expand gap-3">
         <div class="toggle-icon">
-            <ion-icon name="menu-outline"></ion-icon>
+            <img src="{{ asset('assets/icons/menu-outline.svg') }}" width="24" height="24" alt="Menu">
         </div>
 
         <form class="searchbar">
             <div class="position-absolute top-50 translate-middle-y search-icon ms-3">
-                <ion-icon name="search-outline"></ion-icon>
+                <img src="{{ asset('assets/icons/search-outline.svg') }}" width="20" height="20" alt="Cari">
             </div>
             <input class="form-control" type="text" placeholder="Cari sesuatu...">
             <div class="position-absolute top-50 translate-middle-y search-close-icon">
-                <ion-icon name="close-outline"></ion-icon>
+                <img src="{{ asset('assets/icons/close-outline.svg') }}" width="20" height="20" alt="Tutup">
             </div>
         </form>
 
@@ -58,8 +58,9 @@
                         <li>
                             <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                 <div class="d-flex align-items-center">
-                                    <div class="">
-                                        <ion-icon name="person-outline"></ion-icon>
+                                    <div class="parent-icon">
+                                        <img src="{{ asset('assets/icons/person-outline.svg') }}" width="20"
+                                            height="20" alt="Profil">
                                     </div>
                                     <div class="ms-3"><span>Profil</span></div>
                                 </div>
@@ -68,8 +69,9 @@
                         <li>
                             <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                 <div class="d-flex align-items-center">
-                                    <div class="">
-                                        <ion-icon name="speedometer-outline"></ion-icon>
+                                    <div class="parent-icon">
+                                        <img src="{{ asset('assets/icons/speedometer-outline.svg') }}" width="20"
+                                            height="20" alt="Dashboard">
                                     </div>
                                     <div class="ms-3"><span>Dashboard</span></div>
                                 </div>
@@ -82,8 +84,9 @@
                             <a class="dropdown-item" href="javascript:;" data-bs-toggle="modal"
                                 data-bs-target="#logoutModal">
                                 <div class="d-flex align-items-center">
-                                    <div class="">
-                                        <ion-icon name="log-out-outline"></ion-icon>
+                                    <div class="parent-icon">
+                                        <img src="{{ asset('assets/icons/log-out-outline.svg') }}" width="20"
+                                            height="20" alt="Logout">
                                     </div>
                                     <div class="ms-3"><span>Logout</span></div>
                                 </div>
