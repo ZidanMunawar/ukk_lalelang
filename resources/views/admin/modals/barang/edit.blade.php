@@ -22,7 +22,6 @@
                             <input type="text" class="form-control" id="tgl_edit{{ $barang->id_barang }}"
                                 value="{{ \Carbon\Carbon::parse($barang->tgl)->format('d F Y') }}" readonly
                                 style="background-color: #e9ecef;">
-                            {{-- <small class="text-muted">Tanggal tidak dapat diubah</small> --}}
                         </div>
 
                         <div class="col-12 mb-3">
@@ -56,7 +55,8 @@
                                             <button type="button"
                                                 class="btn btn-sm btn-info position-absolute top-0 start-0 m-1 p-1"
                                                 style="width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;"
-                                                onclick="setPrimaryImage{{ $barang->id_barang }}({{ $img->id_gambar }})"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#setPrimaryModal{{ $img->id_gambar }}"
                                                 title="Jadikan Utama">
                                                 <img src="{{ asset('assets/icons/star-outline.svg') }}" width="14"
                                                     height="14" alt="Primary" style="filter: invert(100%);">
@@ -98,22 +98,43 @@
     </div>
 </div>
 
-<!-- Form Hidden untuk Set Primary -->
-<form id="setPrimaryForm{{ $barang->id_barang }}" method="POST" style="display: none;">
-    @csrf
-</form>
+<!-- Modal Set Primary -->
+@foreach ($barang->gambar as $img)
+    @if (!$img->is_primary)
+        <div class="modal fade" id="setPrimaryModal{{ $img->id_gambar }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Set Gambar Utama</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="{{ asset('storage/barang/' . $img->gambar) }}" class="img-fluid rounded mb-3"
+                            style="max-height: 150px; width: auto;" alt="{{ $barang->nama_barang }}">
+                        <p>Jadikan gambar ini sebagai gambar utama?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('admin.barang.set.primary', $img->id_gambar) }}" method="POST"
+                            style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <img src="{{ asset('assets/icons/star-outline.svg') }}" width="14"
+                                    height="14" alt="Set Primary"
+                                    style="filter: invert(100%); margin-right: 3px;">
+                                Ya, Jadikan Utama
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+@endforeach
 
-<script>
-    function setPrimaryImage{{ $barang->id_barang }}(imageId) {
-        if (confirm('Jadikan gambar ini sebagai gambar utama?')) {
-            const form = document.getElementById('setPrimaryForm{{ $barang->id_barang }}');
-            form.action = '/admin/barang/set-primary/' + imageId;
-            form.submit();
-        }
-    }
-</script>
-
-<!-- Modal Konfirmasi Hapus Gambar (untuk setiap gambar) -->
+<!-- Modal Konfirmasi Hapus Gambar -->
 @foreach ($barang->gambar as $img)
     @if (!$img->is_primary && $barang->gambar->count() > 1)
         <div class="modal fade" id="deleteImageModal{{ $img->id_gambar }}" tabindex="-1" aria-hidden="true">
@@ -126,7 +147,7 @@
                     </div>
                     <div class="modal-body text-center">
                         <img src="{{ asset('storage/barang/' . $img->gambar) }}" class="img-fluid rounded mb-3"
-                            style="max-height: 150px;" alt="{{ $barang->nama_barang }}">
+                            style="max-height: 150px; width: auto;" alt="{{ $barang->nama_barang }}">
                         <p>Hapus gambar ini?</p>
                     </div>
                     <div class="modal-footer">

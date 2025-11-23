@@ -120,10 +120,10 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3">
                                         <input type="password" class="form-control" id="password" name="password"
-                                            placeholder="Password Baru" />
+                                            placeholder="Password Baru" minlength="6" />
                                         <label for="password">Password Baru</label>
-                                        <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah
-                                            password</small>
+                                        <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah password
+                                            (minimal 6 karakter)</small>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

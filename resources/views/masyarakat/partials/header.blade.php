@@ -5,7 +5,7 @@
             <div class="header__logo">
                 <a href="{{ route('masyarakat.dashboard') }}">
                     <img src="{{ asset('assets-user/images/logo/lalelang.png') }}"
-                        style="max-width: 100px; max-height: 100px;" alt="logo" />
+                        style="max-width: 70px; max-height: 100px;" alt="logo" />
                 </a>
             </div>
 

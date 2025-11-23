@@ -11,33 +11,37 @@ use App\Models\HistoryLelang;
 
 class DashboardController extends Controller
 {
+    // Menampilkan halaman dashboard admin/petugas
     public function index()
     {
+        // Ambil data user yang sedang login (petugas/admin)
         $user = auth()->guard('petugas')->user();
 
-        // Data statistik
+        // Hitung data statistik umum untuk semua user
         $totalBarang = Barang::count();
         $totalMasyarakat = Masyarakat::count();
         $lelangAktif = Lelang::where('status', 'dibuka')->count();
         $lelangSelesai = Lelang::whereNotNull('id_user')->where('status', 'ditutup')->count();
 
-        // Data khusus admin
+        // Cek jika user adalah administrator
         if ($user->level->level === 'administrator') {
+            // Data khusus admin
             $totalPetugas = Petugas::count();
             $totalPenawaran = HistoryLelang::count();
 
-            // Lelang terbaru
+            // Ambil 5 data lelang terbaru untuk ditampilkan
             $lelangTerbaru = Lelang::with(['barang.gambarPrimary', 'petugas'])
                 ->latest()
                 ->take(5)
                 ->get();
 
-            // Top bidders
+            // Ambil 5 masyarakat dengan penawaran terbanyak
             $topBidders = Masyarakat::withCount('historyLelang')
                 ->orderBy('history_lelang_count', 'desc')
                 ->take(5)
                 ->get();
 
+            // Tampilkan view dashboard dengan data admin
             return view('admin.pages.dashboard', compact(
                 'totalBarang',
                 'totalMasyarakat',
@@ -50,19 +54,20 @@ class DashboardController extends Controller
             ));
         }
 
-        // Data khusus petugas
+        // Data khusus petugas (bukan admin)
         $myLelang = Lelang::where('id_petugas', $user->id_petugas)->count();
         $myLelangAktif = Lelang::where('id_petugas', $user->id_petugas)
             ->where('status', 'dibuka')
             ->count();
 
-        // Lelang yang saya kelola
+        // Ambil 5 lelang yang dikelola oleh petugas ini
         $lelangSaya = Lelang::with(['barang.gambarPrimary', 'pemenang'])
             ->where('id_petugas', $user->id_petugas)
             ->latest()
             ->take(5)
             ->get();
 
+        // Tampilkan view dashboard dengan data petugas
         return view('admin.pages.dashboard', compact(
             'totalBarang',
             'totalMasyarakat',

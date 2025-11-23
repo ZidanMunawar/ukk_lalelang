@@ -26,19 +26,27 @@ class BarangController extends Controller
         return view('admin.pages.barang.index', compact('barang'));
     }
 
-
     // Menyimpan data barang baru
     public function store(Request $request)
     {
+        // Pre-process harga_awal untuk menghilangkan karakter non-numeric
+        if ($request->has('harga_awal')) {
+            $request->merge([
+                'harga_awal' => (int) preg_replace('/[^0-9]/', '', $request->harga_awal)
+            ]);
+        }
+
         $request->validate([
             'nama_barang' => 'required|string|max:50',
-            'harga_awal' => 'required|numeric|min:0',
+            'harga_awal' => 'required|numeric|min:0|max:999999999999999999', // 999 Kuadriliun
             'deskripsi_barang' => 'required|string',
             'gambar.*' => 'required|image|mimes:jpeg,png,jpg|max:3072',
         ], [
             'nama_barang.required' => 'Nama barang wajib diisi',
             'harga_awal.required' => 'Harga awal wajib diisi',
             'harga_awal.numeric' => 'Harga awal harus berupa angka',
+            'harga_awal.min' => 'Harga awal tidak boleh negatif',
+            'harga_awal.max' => 'Harga awal maksimal 999.999.999.999.999.999',
             'deskripsi_barang.required' => 'Deskripsi barang wajib diisi',
             'gambar.*.required' => 'Minimal upload 1 gambar',
             'gambar.*.image' => 'File harus berupa gambar',
@@ -76,15 +84,24 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
 
+        // Pre-process harga_awal untuk menghilangkan karakter non-numeric
+        if ($request->has('harga_awal')) {
+            $request->merge([
+                'harga_awal' => (int) preg_replace('/[^0-9]/', '', $request->harga_awal)
+            ]);
+        }
+
         $request->validate([
             'nama_barang' => 'required|string|max:50',
-            'harga_awal' => 'required|numeric|min:0',
+            'harga_awal' => 'required|numeric|min:0|max:999999999999999999', // 999 Kuadriliun
             'deskripsi_barang' => 'required|string',
             'gambar.*' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ], [
             'nama_barang.required' => 'Nama barang wajib diisi',
             'harga_awal.required' => 'Harga awal wajib diisi',
             'harga_awal.numeric' => 'Harga awal harus berupa angka',
+            'harga_awal.min' => 'Harga awal tidak boleh negatif',
+            'harga_awal.max' => 'Harga awal maksimal 999.999.999.999.999.999',
             'deskripsi_barang.required' => 'Deskripsi barang wajib diisi',
             'gambar.*.image' => 'File harus berupa gambar',
             'gambar.*.mimes' => 'Format gambar harus jpeg, png, atau jpg',

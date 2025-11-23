@@ -130,7 +130,7 @@ Route::prefix('masyarakat')->name('masyarakat.')->group(function () {
 
         // Profile routes
         Route::get('profile', [UserController::class, 'index'])->name('profile');
-        Route::put('profile', [UserController::class, 'update'])->name('profile.update');
+        Route::put('profile/update', [UserController::class, 'update'])->name('profile.update');
 
         //riwaya
         Route::get('activity', function () {

@@ -203,6 +203,61 @@
                             </div>
                         </div>
 
+                        <!-- Sistem Bid -->
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-light border-bottom-0">
+                                <h6 class="mb-0 fw-bold">
+                                    <i class="icofont-info-circle me-2 text-primary"></i>
+                                    Sistem Bid Increment
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-muted mb-3">Penawaran mengikuti ketentuan kenaikan harga berikut:
+                                </p>
+
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-borderless mb-0">
+                                        <tbody>
+                                            <tr class="border-bottom">
+                                                <td width="40%" class="fw-semibold">Rp 0 - Rp 500.000</td>
+                                                <td width="10%" class="text-center">→</td>
+                                                <td width="50%" class="text-success fw-bold">Increment Rp 10.000
+                                                </td>
+                                            </tr>
+                                            <tr class="border-bottom">
+                                                <td class="fw-semibold">Rp 500.001 - Rp 2.000.000</td>
+                                                <td class="text-center">→</td>
+                                                <td class="text-success fw-bold">Increment Rp 50.000</td>
+                                            </tr>
+                                            <tr class="border-bottom">
+                                                <td class="fw-semibold">Rp 2.000.001 - Rp 10.000.000</td>
+                                                <td class="text-center">→</td>
+                                                <td class="text-success fw-bold">Increment Rp 100.000</td>
+                                            </tr>
+                                            <tr class="border-bottom">
+                                                <td class="fw-semibold">Rp 10.000.001 - Rp 50.000.000</td>
+                                                <td class="text-center">→</td>
+                                                <td class="text-success fw-bold">Increment Rp 500.000</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fw-semibold">Di atas Rp 50.000.000</td>
+                                                <td class="text-center">→</td>
+                                                <td class="text-success fw-bold">Increment Rp 1.000.000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="alert alert-info mt-3 mb-0 py-2">
+                                    <small>
+                                        <i class="icofont-light-bulb me-1"></i>
+                                        <strong>Contoh:</strong> Jika harga saat ini Rp 450.000, penawaran minimal
+                                        adalah Rp
+                                        460.000
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Footer Copyright -->
                         <div class="text-center mt-5 pt-4 border-top">
                             <p class="text-muted mb-0">

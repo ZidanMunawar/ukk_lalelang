@@ -15,7 +15,7 @@
             <img src="{{ asset('assets/icons/checkmark-circle.svg') }}" width="20" height="20" alt="Success"
                 style="filter: invert(100%);">
             {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
@@ -24,9 +24,10 @@
             <img src="{{ asset('assets/icons/alert-circle.svg') }}" width="20" height="20" alt="Error"
                 style="filter: invert(100%);">
             {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+
     <!-- Validation Errors -->
     @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">

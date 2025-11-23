@@ -39,7 +39,7 @@
             <div class="header__logo text-center">
                 <a href="#">
                     <img src="{{ asset('assets-user/images/logo/Lalelang.png') }}" alt="logo"
-                        style="max-width: 100px;" />
+                        style="max-width: 50px;" />
                 </a>
             </div>
         </div>

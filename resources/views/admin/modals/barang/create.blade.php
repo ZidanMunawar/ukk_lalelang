@@ -31,14 +31,15 @@
 
                         <div class="col-12 mb-3">
                             <label for="harga_awal" class="form-label">Harga Awal</label>
-                            <input type="number" class="form-control @error('harga_awal') is-invalid @enderror"
+                            <input type="text" class="form-control @error('harga_awal') is-invalid @enderror"
                                 id="harga_awal" name="harga_awal" value="{{ old('harga_awal') }}"
-                                placeholder="Masukkan harga awal" min="0" required>
+                                placeholder="Masukkan harga awal (contoh: 1000000000)"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="18" required>
                             @error('harga_awal')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                            <small class="text-muted">Maksimal: 999.999.999.999.999.999 (999 Kuadriliun)</small>
                         </div>
-
                         <div class="col-12 mb-3">
                             <label for="deskripsi_barang" class="form-label">Deskripsi Barang</label>
                             <textarea class="form-control @error('deskripsi_barang') is-invalid @enderror" id="deskripsi_barang"

@@ -45,6 +45,9 @@
                                             ->where('id_user', Auth::guard('masyarakat')->id())
                                             ->max('penawaran_harga');
                                         $isUserHighest = $userHighestBid == $lelang->harga_akhir;
+                                        // Hitung selisih dengan penawaran tertinggi saat ini
+                                        $currentHighestBid = $lelang->harga_akhir;
+                                        $bidDifference = $currentHighestBid - $userHighestBid;
                                     @endphp
 
                                     <div class="col-12">
@@ -88,14 +91,18 @@
                                                     @elseif($isInProcess)
                                                         <p class="mb-2">
                                                             @if ($isUserHighest)
-                                                                Anda memimpin dengan penawaran
+                                                                Anda <b>memimpin</b> dengan penawaran
                                                                 <b>Rp {{ number_format($userHighestBid, 0, ',', '.') }}</b>
                                                                 <span
                                                                     class="badge bg-warning ms-2 text-dark">Memimpin</span>
                                                             @else
-                                                                Anda mengajukan penawaran sebesar
+                                                                Anda <b>tertinggal</b> dengan penawaran
                                                                 <b>Rp {{ number_format($userHighestBid, 0, ',', '.') }}</b>
-                                                                <span class="badge bg-info ms-2">Dalam Proses</span>
+                                                                <span class="badge bg-secondary ms-2">Tertinggal</span>
+                                                                <small class="text-danger">
+                                                                    (Selisih: Rp
+                                                                    {{ number_format($bidDifference, 0, ',', '.') }})
+                                                                </small>
                                                             @endif
                                                         </p>
                                                     @endif
@@ -166,8 +173,12 @@
                                                                                     class="badge bg-warning text-dark">Sedang
                                                                                     Memimpin</span>
                                                                             @else
-                                                                                <span class="badge bg-info">Dalam
-                                                                                    Proses</span>
+                                                                                <span
+                                                                                    class="badge bg-secondary">Tertinggal</span>
+                                                                                <small class="text-danger ms-2">
+                                                                                    (Selisih: Rp
+                                                                                    {{ number_format($bidDifference, 0, ',', '.') }})
+                                                                                </small>
                                                                             @endif
                                                                         @endif
                                                                     </td>
@@ -179,7 +190,7 @@
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td><strong>Harga Akhir</strong></td>
+                                                                    <td><strong>Harga Akhir Saat Ini</strong></td>
                                                                     <td>
                                                                         @if ($lelang->harga_akhir > 0)
                                                                             Rp
@@ -199,6 +210,17 @@
                                                                         </span>
                                                                     </td>
                                                                 </tr>
+                                                                @if ($isInProcess && !$isUserHighest)
+                                                                    <tr>
+                                                                        <td><strong>Selisih dengan Tertinggi</strong></td>
+                                                                        <td>
+                                                                            <span class="badge bg-danger">
+                                                                                Rp
+                                                                                {{ number_format($bidDifference, 0, ',', '.') }}
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endif
                                                             </table>
                                                         </div>
                                                     </div>

@@ -27,6 +27,22 @@
         </div>
     @endif
 
+    <!-- Validation Errors -->
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+            <img src="{{ asset('assets/icons/alert-circle.svg') }}" width="20" height="20" alt="Error"
+                style="filter: invert(100%); margin-right: 8px;">
+            <div class="flex-grow-1">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <button type="button" class="btn-close ms-3" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <div class="row">
         <!-- Card Profile -->
         <div class="col-lg-4">
