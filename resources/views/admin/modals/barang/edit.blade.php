@@ -27,8 +27,22 @@
                         <div class="col-12 mb-3">
                             <label for="harga_awal_edit{{ $barang->id_barang }}" class="form-label">Harga Awal</label>
                             <input type="number" class="form-control" id="harga_awal_edit{{ $barang->id_barang }}"
-                                name="harga_awal" value="{{ $barang->harga_awal }}" min="0" required>
+                                name="harga_awal" value="{{ $barang->harga_awal }}"
+                                placeholder="Masukkan harga awal (contoh: 1000000000)" min="0" required>
+                            <small class="text-muted">Maksimal: 999.999.999.999.999.999 (999 Kuadriliun)</small>
                         </div>
+
+                        {{-- <div class="col-12 mb-3">
+                            <label for="harga_awal_edit" class="form-label">Harga Awal</label>
+                            <input type="text" class="form-control @error('harga_awal') is-invalid @enderror"
+                                id="harga_awal_edit" name="harga_awal_edit" value="{{ old('harga_awal') }}"
+                                placeholder="Masukkan harga awal (contoh: 1000000000)"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="18" required>
+                            @error('harga_awal')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <small class="text-muted">Maksimal: 999.999.999.999.999.999 (999 Kuadriliun)</small>
+                        </div> --}}
 
                         <div class="col-12 mb-3">
                             <label for="deskripsi_barang_edit{{ $barang->id_barang }}" class="form-label">Deskripsi

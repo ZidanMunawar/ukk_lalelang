@@ -7,7 +7,7 @@
     <title>@yield('title', 'Dashboard Masyarakat') - Sistem Lelang</title>
 
     <!-- site favicon -->
-    <link rel="icon" type="image/png" href="{{ asset('assets-user/images/favicon.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('assets-user/images/logo/lalelang.png') }}">
 
     <!-- ====== All css files ========= -->
     <link rel="stylesheet" href="{{ asset('assets-user/css/bootstrap.min.css') }}">
@@ -28,7 +28,7 @@
             @include('masyarakat.partials.page_header')
         @endif
 
-        <div class="container light-version">
+        <div class="page-content-wrapper light-version">
             @yield('content')
         </div>
 

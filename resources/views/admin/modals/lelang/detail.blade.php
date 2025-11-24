@@ -76,8 +76,7 @@
                                         @if ($lelang->id_user != null && $lelang->pemenang)
                                             {{ $lelang->pemenang->nama_lengkap }}
                                             <br><small class="text-muted">NIK: {{ $lelang->pemenang->nik }}</small>
-                                            <br><small class="text-muted">Alamat:
-                                                {{ $lelang->pemenang->alamat }}</small>
+                                            <br><small class="text-muted">Telp: {{ $lelang->pemenang->telp }}</small>
                                             <br><small class="text-muted">Alamat:
                                                 {{ $lelang->pemenang->alamat }}</small>
                                         @else

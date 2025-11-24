@@ -119,14 +119,8 @@
                             </thead>
                             <tbody>
                                 @foreach ($lelang->historyLelang->sortByDesc('created_at') as $history)
-                                    <tr
-                                        class="{{ $history->penawaran_harga == $lelang->harga_akhir ? 'table-success' : '' }}">
-                                        <td>
-                                            {{ $history->user->nama_lengkap }}
-                                            @if ($history->user->id_user == $lelang->id_user)
-                                                <br><span class="badge bg-success badge-sm">Pemenang</span>
-                                            @endif
-                                        </td>
+                                    <tr>
+                                        <td>{{ $history->user->nama_lengkap }}</td>
                                         <td>
                                             <span
                                                 class="badge bg-{{ $history->penawaran_harga == $lelang->harga_akhir ? 'success' : 'secondary' }}">

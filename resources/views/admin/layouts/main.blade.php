@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <!-- site favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/lalelang.png') }}">
     <!-- loader -->
     <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('assets/js/pace.min.js') }}"></script>
@@ -20,7 +21,7 @@
     <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet"> --}}
 
     <!-- Theme Styles -->
     <link href="{{ asset('assets/css/dark-theme.css') }}" rel="stylesheet" />
@@ -54,8 +55,10 @@
         </div>
 
         <!-- Back to Top & Switcher -->
-        <a href="javascript:;" class="back-to-top"><ion-icon name="arrow-up-outline"></ion-icon></a>
+        <a href="javascript:;" class="back-to-top"><img src="{{ asset('assets/icons/arrow-up-outline.svg') }}"
+                width="20" height="20" alt="Up" style="filter: invert(100%);"></a>
         <div class="switcher-body">
+
             {{-- hm --}}
         </div>
         <div class="overlay nav-toggle-icon"></div>

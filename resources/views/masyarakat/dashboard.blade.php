@@ -5,9 +5,9 @@
 @section('content')
     <!-- ===============//banner section start here \\================= -->
     <section class="banner-section light-version"
-        style="background-image: url({{ asset('assets-user/images/banner/bg-7.jpg') }});">
-        <div class="container">
-            <div class="banner-wrapper">
+        style="background-image: url({{ asset('assets-user/images/banner/bg-6.jpg') }});">
+        <div class="container-fluid">
+            <div class="banner m-5">
                 <div class="row align-items-center g-5">
                     <div class="col-lg-6">
                         <div class="banner-content">
@@ -304,10 +304,10 @@
                                                         <span class="yellow-color">Rp
                                                             {{ number_format($lelang->barang->harga_awal, 0, ',', '.') }}</span>
                                                     </p>
-                                                    <div class="d-flex align-items-center">
+                                                    {{-- <div class="d-flex align-items-center">
                                                         <i class="icofont-eye me-1"></i>
                                                         <span>0</span>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
 
                                                 <div class="mt-2">
