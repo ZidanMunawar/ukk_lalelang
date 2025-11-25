@@ -11,18 +11,18 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="id_barang" class="form-label">Pilih Barang</label>
-                        <select class="form-select @error('id_barang') is-invalid @enderror" id="id_barang"
-                            name="id_barang" required onchange="previewBarang(this)">
-                            <option value="">-- Pilih Barang --</option>
+                        <select class="form-select select2-barang @error('id_barang') is-invalid @enderror"
+                            id="id_barang" name="id_barang" required>
+                            <option value="">-- Cari dan Pilih Barang --</option>
                             @foreach ($barangTersedia as $brg)
                                 <option value="{{ $brg->id_barang }}"
                                     data-img="{{ $brg->gambarPrimary ? asset('storage/barang/' . $brg->gambarPrimary->gambar) : asset('assets/images/no-image.png') }}"
                                     data-harga="{{ $brg->harga_awal }}" data-desc="{{ $brg->deskripsi_barang }}"
-                                    data-jumlah-foto="{{ $brg->gambar->count() ?? 0 }}">
-                                    {{ $brg->nama_barang }}
+                                    data-jumlah-foto="{{ $brg->gambar->count() ?? 0 }}"
+                                    data-nama="{{ $brg->nama_barang }}">
+                                    {{ $brg->nama_barang }} - Rp {{ number_format($brg->harga_awal, 0, ',', '.') }}
                                 </option>
                             @endforeach
-
                         </select>
                         @error('id_barang')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -41,8 +41,6 @@
                         @enderror
                     </div>
 
-
-
                     <!-- Preview Barang -->
                     <div id="preview-barang" style="display: none;">
                         <div class="card">
@@ -52,6 +50,7 @@
                                         <img id="preview-img" src="" class="img-fluid rounded" alt="Preview">
                                     </div>
                                     <div class="col-7">
+                                        <h6 id="preview-nama" class="mb-2"></h6>
                                         <p class="mb-1"><strong>Harga Awal:</strong></p>
                                         <p id="preview-harga" class="text-success fw-bold mb-2"></p>
                                         <p class="mb-1"><strong>Deskripsi:</strong></p>
@@ -63,7 +62,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <div class="alert alert-warning mt-3" role="alert">
                         <small>
@@ -92,25 +90,100 @@
 </div>
 
 <script>
-    function previewBarang(select) {
-        const option = select.options[select.selectedIndex];
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inisialisasi Select2
+        $('.select2-barang').select2({
+            placeholder: 'Cari dan pilih barang...',
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#createModal'),
+            templateResult: formatBarang,
+            templateSelection: formatBarangSelection
+        });
+
+        // Event ketika barang dipilih
+        $('.select2-barang').on('select2:select', function(e) {
+            const selectedData = e.params.data;
+            previewBarang(selectedData);
+        });
+
+        // Event ketika selection di-clear
+        $('.select2-barang').on('select2:clear', function(e) {
+            hidePreview();
+        });
+    });
+
+    function formatBarang(barang) {
+        if (!barang.id) {
+            return barang.text;
+        }
+
+        const $barang = $(
+            '<div class="select2-barang-result">' +
+            '<div class="barang-nama">' + barang.element.getAttribute('data-nama') + '</div>' +
+            '<div class="barang-harga text-muted small">Rp ' +
+            parseInt(barang.element.getAttribute('data-harga')).toLocaleString('id-ID') +
+            '</div>' +
+            '</div>'
+        );
+        return $barang;
+    }
+
+    function formatBarangSelection(barang) {
+        if (!barang.id) {
+            return barang.text;
+        }
+        return barang.element.getAttribute('data-nama');
+    }
+
+    function previewBarang(selectedData) {
+        const element = selectedData.element;
         const preview = document.getElementById('preview-barang');
 
-        if (option.value) {
-            document.getElementById('preview-img').src = option.dataset.img;
-            document.getElementById('preview-harga').textContent = 'Rp ' + parseInt(option.dataset.harga)
-                .toLocaleString('id-ID');
-            document.getElementById('preview-desc').textContent = option.dataset.desc;
-
-            // Update Jumlah Foto dan ID Barang
-            document.getElementById('preview-jumlah-foto').textContent = option.dataset.jumlahFoto || '0';
-            document.getElementById('preview-id-barang').textContent = option.value;
+        if (element && element.value) {
+            document.getElementById('preview-img').src = element.getAttribute('data-img');
+            document.getElementById('preview-nama').textContent = element.getAttribute('data-nama');
+            document.getElementById('preview-harga').textContent = 'Rp ' +
+                parseInt(element.getAttribute('data-harga')).toLocaleString('id-ID');
+            document.getElementById('preview-desc').textContent = element.getAttribute('data-desc');
+            document.getElementById('preview-jumlah-foto').textContent = element.getAttribute('data-jumlah-foto') ||
+            '0';
+            document.getElementById('preview-id-barang').textContent = element.value;
 
             preview.style.display = 'block';
         } else {
-            preview.style.display = 'none';
-            document.getElementById('preview-jumlah-foto').textContent = '0';
-            document.getElementById('preview-id-barang').textContent = '-';
+            hidePreview();
         }
     }
+
+    function hidePreview() {
+        const preview = document.getElementById('preview-barang');
+        preview.style.display = 'none';
+        document.getElementById('preview-jumlah-foto').textContent = '0';
+        document.getElementById('preview-id-barang').textContent = '-';
+    }
 </script>
+
+<style>
+    .select2-barang-result .barang-nama {
+        font-weight: 500;
+    }
+
+    .select2-barang-result .barang-harga {
+        font-size: 0.875em;
+    }
+
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background-color: #5897fb;
+        color: white;
+    }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        padding: 5px;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 36px;
+    }
+</style>

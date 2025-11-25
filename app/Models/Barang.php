@@ -35,4 +35,10 @@ class Barang extends Model
     {
         return $this->hasOne(Lelang::class, 'id_barang', 'id_barang');
     }
+
+    // Relasi ke history lelang
+    public function historyLelang()
+    {
+        return $this->hasMany(HistoryLelang::class, 'id_barang', 'id_barang');
+    }
 }

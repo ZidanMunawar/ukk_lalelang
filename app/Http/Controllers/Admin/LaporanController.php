@@ -45,13 +45,16 @@ class LaporanController extends Controller
             $query->whereDate('tgl_lelang', '<=', $request->tanggal_sampai);
         }
 
-        // Eksekusi query dan ambil data, urutkan berdasarkan tanggal lelang terbaru
-        $lelang = $query->orderBy('tgl_lelang', 'desc')->get();
+        // Eksekusi query dengan pagination, urutkan berdasarkan tanggal lelang terbaru
+        $lelang = $query->orderBy('tgl_lelang', 'desc')->paginate(10); // 10 item per halaman
 
-        // Hitung total harga akhir dari semua lelang
-        $totalHargaAkhir = $lelang->sum('harga_akhir');
-        // Hitung total jumlah lelang
-        $totalLelang = $lelang->count();
+        // Hitung total harga akhir dari semua lelang (dalam query yang sama)
+        $totalHargaAkhirQuery = clone $query;
+        $totalHargaAkhir = $totalHargaAkhirQuery->sum('harga_akhir');
+
+        // Hitung total jumlah lelang (dalam query yang sama)
+        $totalLelangQuery = clone $query;
+        $totalLelang = $totalLelangQuery->count();
 
         // Tampilkan halaman laporan dengan data yang sudah diproses
         return view('admin.pages.laporan.index', compact(
@@ -91,7 +94,7 @@ class LaporanController extends Controller
             $query->whereDate('tgl_lelang', '<=', $request->tanggal_sampai);
         }
 
-        // Ambil data lelang yang sudah difilter
+        // Ambil data lelang yang sudah difilter (tanpa pagination untuk PDF)
         $lelang = $query->orderBy('tgl_lelang', 'desc')->get();
 
         // Siapkan data yang akan dikirim ke view PDF

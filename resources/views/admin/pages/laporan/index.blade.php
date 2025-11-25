@@ -73,7 +73,7 @@
                                 $hargaTertinggi = $item->historyLelang->first();
                             @endphp
                             <tr>
-                                <td>{{ $index + 1 }}</td>
+                                <td>{{ ($lelang->currentPage() - 1) * $lelang->perPage() + $index + 1 }}</td>
                                 <td>{{ $item->id_lelang }}</td>
                                 <td>{{ $item->petugas->nama_petugas }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->tgl_lelang)->format('d M Y') }}</td>
@@ -118,6 +118,55 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- Pagination -->
+            @if ($lelang->hasPages())
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <div class="text-muted">
+                        Menampilkan {{ ($lelang->currentPage() - 1) * $lelang->perPage() + 1 }}
+                        sampai {{ min($lelang->currentPage() * $lelang->perPage(), $lelang->total()) }}
+                        dari {{ $lelang->total() }} data
+                    </div>
+                    <nav>
+                        <ul class="pagination mb-0">
+                            {{-- Previous Page Link --}}
+                            @if ($lelang->onFirstPage())
+                                <li class="page-item disabled">
+                                    <span class="page-link">&laquo;</span>
+                                </li>
+                            @else
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $lelang->previousPageUrl() }}" rel="prev">&laquo;</a>
+                                </li>
+                            @endif
+
+                            {{-- Pagination Elements --}}
+                            @foreach ($lelang->getUrlRange(1, $lelang->lastPage()) as $page => $url)
+                                @if ($page == $lelang->currentPage())
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ $page }}</span>
+                                    </li>
+                                @else
+                                    <li class="page-item">
+                                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+
+                            {{-- Next Page Link --}}
+                            @if ($lelang->hasMorePages())
+                                <li class="page-item">
+                                    <a class="page-link" href="{{ $lelang->nextPageUrl() }}" rel="next">&raquo;</a>
+                                </li>
+                            @else
+                                <li class="page-item disabled">
+                                    <span class="page-link">&raquo;</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
+                </div>
+            @endif
         </div>
     </div>
 @endsection

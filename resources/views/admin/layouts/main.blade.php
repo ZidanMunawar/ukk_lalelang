@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" href="{{ asset('assets/images/lalelang.png') }}">
     <!-- loader -->
     <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" />
     <script src="{{ asset('assets/js/pace.min.js') }}"></script>
 
     <!-- plugins -->
